@@ -56,7 +56,7 @@ dip VERSION=20100905201547 rails db:migrate:down
 dip rspec
 
 # run rubocop checks
-dip dubocop
+dip rubocop
 
 # simply launch bash within app directory (with dependencies up)
 dip runner
