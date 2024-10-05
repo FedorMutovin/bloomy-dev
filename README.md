@@ -52,6 +52,12 @@ dip rails db:migrate
 # pass env variables into application
 dip VERSION=20100905201547 rails db:migrate:down
 
+# run rspec specs
+dip rspec
+
+# run rubocop checks
+dip dubocop
+
 # simply launch bash within app directory (with dependencies up)
 dip runner
 
