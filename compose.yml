@@ -12,6 +12,17 @@ x-api: &api
     - /tmp
     - /app/tmp/pids
 
+x-client: &client
+  build:
+    context: ../bloomy-ui-quasar
+    dockerfile: .dockerdev/Dockerfile
+    args:
+      NODE_VERSION: '22'
+  image: bloomy_ui_quasar:0.0.1
+  environment:
+    NODE_ENV: ${NODE_ENV:-development}
+    API_URL: http://localhost:3000
+
 x-backend: &backend
   <<: *api
   stdin_open: true
@@ -49,6 +60,9 @@ services:
     command: bundle exec rails server -b 0.0.0.0
     ports:
       - '3000:3000'
+    depends_on:
+      quasar:
+        condition: service_started
 
   postgres:
     image: postgres:16
@@ -65,6 +79,14 @@ services:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
 
+  quasar:
+    <<: *client
+    volumes:
+      - ../bloomy-ui-quasar:/app:cached
+      - node_modules:/app/node_modules
+    ports:
+      - '9000:9000'
+
 
 
 volumes:
@@ -72,3 +94,4 @@ volumes:
   history:
   rails_cache:
   postgres:
+  node_modules:
