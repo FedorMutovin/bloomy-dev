@@ -29,7 +29,7 @@ dip provision
 ### Running
 
 ```sh
-dip rails s
+dip up
 ```
 
 ### Developing with Dip
